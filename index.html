@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Remaining Percentage Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background-color: #f0f0f0;
+    }
+    input {
+      margin: 10px 0;
+      padding: 10px;
+      font-size: 16px;
+      width: 200px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    #result, #entryStatus {
+      font-size: 20px;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Remaining Percentage Calculator</h2>
+
+  <label>Total Value:</label><br>
+  <input type="number" id="totalInput" placeholder="Enter total (e.g., 50)"><br>
+
+  <label>Used Value:</label><br>
+  <input type="number" id="usedInput" placeholder="Enter used (e.g., 5)"><br>
+
+  <button onclick="calculateRemaining()">Calculate</button>
+
+  <div id="result"></div>
+  <div id="entryStatus"></div>
+
+  <script>
+    function calculateRemaining() {
+      let total = parseFloat(document.getElementById('totalInput').value);
+      let used = parseFloat(document.getElementById('usedInput').value);
+      let resultDiv = document.getElementById('result');
+      let statusDiv = document.getElementById('entryStatus');
+
+      // Reset outputs
+      resultDiv.innerHTML = "";
+      statusDiv.innerHTML = "";
+
+      if (isNaN(total) || isNaN(used) || total <= 0 || used < 0 || used > total) {
+        resultDiv.innerHTML = "⚠️ Please enter valid numbers (used ≤ total).";
+        resultDiv.style.color = "black";
+        return;
+      }
+
+      let remaining = total - used;
+      let percent = (remaining / total) * 100;
+
+      // Set color for percentage output
+      let color = "green";
+      if (percent < 30) {
+        color = "red";
+      } else if (percent < 70) {
+        color = "orange";
+      }
+
+      resultDiv.innerHTML = `Remaining: ${percent.toFixed(2)}%`;
+      resultDiv.style.color = color;
+
+      // Entry status check
+      if (percent >= 85) {
+        statusDiv.innerHTML = "✅ Entry";
+        statusDiv.style.color = "green";
+      } else {
+        statusDiv.innerHTML = "⛔ No Entry";
+        statusDiv.style.color = "red";
+      }
+    }
+  </script>
+
+</body>
+</html>
